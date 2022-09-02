@@ -1,21 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useRef } from 'react';
-import { StyleSheet, Text, View, TextInput, Alert, Button, Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, Button, Image, FlatList} from 'react-native';
 
 export default function App() {
   const [number1, setNumber1] = useState(0);
   const [number2, setNumber2] = useState(0);
+  const [text, setText] = useState('');
+  const [data, setData] = useState([]);
   
 
   const buttonPressedPlus = () => { 
-     Alert.alert('Result: ' + (parseInt(number1) + parseInt(number2))); 
+    const texti= (number1+' + '+ number2 + ' = '+ (parseInt(number1) + parseInt(number2)));//tehdään lokaali muuttuja että synkronoituu oikein
+    console.log(texti);
+    const plussa= [...data,{key:texti}];//spread funktio,ensin vanhat elementit, ja sitten lisätään key:text(syöttökentän teksti)
+    setData(plussa);
+    console.log(plussa);
+   Alert.alert('Result: ' + (parseInt(number1) + parseInt(number2))); 
+   
      setNumber1(0);
      setNumber2(0);
     
   };
   const buttonPressedMinus = () => { 
-    
-    Alert.alert('Result: ' + (parseInt(number1) - parseInt(number2))); 
+    const texti= (number1+' - '+ number2 + ' = '+ (parseInt(number1) - parseInt(number2)));//tehdään lokaali muuttuja että synkronoituu oikein
+    console.log(texti);
+    const plussa= [...data,{key:texti}];//spread funktio,ensin vanhat elementit, ja sitten lisätään key:text(syöttökentän teksti)
+    setData(plussa);
+    console.log(plussa);
+   Alert.alert('Result: ' + (parseInt(number1) - parseInt(number2))); 
     setNumber1(0);
     setNumber2(0);
     
@@ -34,7 +46,13 @@ export default function App() {
             <Button onPress={buttonPressedMinus} title="-" />
           </View>
       </View>
-          
+      <Text style={{ fontSize: 20, color: 'blue' }}> History</Text>
+      <FlatList style={styles.list} 
+        data={data}
+        renderItem={({ item }) => 
+          <Text>{item.key}</Text>}
+          keyExtractor={(item, index) => index.toString()}
+       />    
         <StatusBar style="auto" />
     </View>
       
@@ -48,6 +66,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
+  list: {
+    margin:10,
+    },
   button: {
     alignItems: 'center',
     justifyContent: 'space-between',
