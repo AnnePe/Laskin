@@ -10,32 +10,38 @@ export default function App() {
   
 
   const buttonPressedPlus = () => { 
+    setText('');
     const texti= (number1+' + '+ number2 + ' = '+ (parseInt(number1) + parseInt(number2)));//tehdään lokaali muuttuja että synkronoituu oikein
     console.log(texti);
     const plussa= [...data,{key:texti}];//spread funktio,ensin vanhat elementit, ja sitten lisätään key:text(syöttökentän teksti)
     setData(plussa);
     console.log(plussa);
-   Alert.alert('Result: ' + (parseInt(number1) + parseInt(number2))); 
-   
+   //Alert.alert('Result: ' + (parseInt(number1) + parseInt(number2))); 
+   setText(parseInt(number1) + parseInt(number2)); 
      setNumber1(0);
      setNumber2(0);
     
+    
   };
   const buttonPressedMinus = () => { 
+    setText('');
     const texti= (number1+' - '+ number2 + ' = '+ (parseInt(number1) - parseInt(number2)));//tehdään lokaali muuttuja että synkronoituu oikein
     console.log(texti);
     const plussa= [...data,{key:texti}];//spread funktio,ensin vanhat elementit, ja sitten lisätään key:text(syöttökentän teksti)
     setData(plussa);
     console.log(plussa);
-   Alert.alert('Result: ' + (parseInt(number1) - parseInt(number2))); 
+ //  Alert.alert('Result: ' + (parseInt(number1) - parseInt(number2))); 
+ setText(parseInt(number1) - parseInt(number2)); 
     setNumber1(0);
     setNumber2(0);
+    
     
   };
   return (
     
     <View style={styles.container}>
-        <Image style={styles.image} source={{uri: 'https://www.sttinfo.fi/data/images/00304/be7db042-6b61-49f9-9bcd-7fd41b7bc35d.jpg'}} />
+      <Text> Result: {text}</Text> 
+      
         <TextInput placeholder='Anna numero1' keyboardType="numeric" style={styles.input} onChangeText={number1 => setNumber1(number1)} value={number1}/>
         <TextInput placeholder='Anna numero2' keyboardType="numeric" style={styles.input} onChangeText={number2 => setNumber2(number2)} value={number2}/>
       <View style={styles.button2}>
@@ -65,6 +71,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
+    margin:60,
   },
   list: {
     margin:10,
